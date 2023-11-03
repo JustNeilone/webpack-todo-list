@@ -1,5 +1,8 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+// eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
+const path = require('path');
+// eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 /*eslint-env node*/
 module.exports = [
   {
