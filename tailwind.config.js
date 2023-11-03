@@ -1,15 +1,11 @@
+/*eslint-env node*/
 module.exports = {
-  content: [
-    './src/**/*.html',
-    './src/**/*.js',
-    './dist/**/*.html',
-    './dist/**/*.js'
-  ],
+  content: ['./src/**/*.html', './src/**/*.js', './dist/**/*.html', './dist/**/*.js'],
   theme: {
-    extend: {},
+    extend: {}
   },
   variants: {
-    extend: {},
+    extend: {}
   },
-  plugins: [],
+  plugins: []
 };

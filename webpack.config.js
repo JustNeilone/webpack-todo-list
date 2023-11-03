@@ -1,5 +1,6 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+/*eslint-env node*/
 module.exports = [
   {
     entry: './src/index.js',
@@ -7,34 +8,34 @@ module.exports = [
     target: 'web',
     output: {
       filename: 'main.js',
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'dist')
     },
     devServer: {
       static: {
-        directory: path.resolve(__dirname, 'dist'),
+        directory: path.resolve(__dirname, 'dist')
       },
       port: 3000,
       open: true,
       hot: true,
       compress: true,
-      historyApiFallback: true,
+      historyApiFallback: true
     },
     plugins: [
       new HtmlWebpackPlugin({
         favicon: './public/favicon.ico',
         manifest: './public/manifest.json',
-        template: './public/index.html',
+        template: './public/index.html'
       })
     ],
     resolve: {
-      extensions: ['.js', '.ts', '.tsx', '.jsx'],
+      extensions: ['.js', '.ts', '.tsx', '.jsx']
     },
     module: {
       rules: [
         {
           test: /\.(ts|tsx)$/,
           exclude: /node_modules/,
-          use: ['ts-loader'],
+          use: ['ts-loader']
         },
         {
           test: /\.(js|jsx)$/,
@@ -49,13 +50,13 @@ module.exports = [
         {
           test: /\.css$/,
           exclude: /node_modules/,
-          use: ['style-loader', 'css-loader', 'postcss-loader'],
+          use: ['style-loader', 'css-loader', 'postcss-loader']
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
           type: 'asset/resource'
         }
-      ],
-    },
+      ]
+    }
   }
 ];
