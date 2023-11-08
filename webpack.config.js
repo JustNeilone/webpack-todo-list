@@ -2,16 +2,27 @@
 const path = require('path');
 // eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
+// webpack hook for stopping compilation on error
+const breakOnErrorHook = function () {
+  this.hooks.done.tapAsync('done', function (stats, callback) {
+    if (stats.compilation.errors.length > 0) {
+      throw new Error(stats.compilation.errors.map((err) => err.message || err));
+    }
+    callback();
+  });
+};
 
 /*eslint-env node*/
 module.exports = [
   {
-    entry: './src/index.js',
+    entry: './src/index.tsx',
     mode: 'development',
     target: 'web',
     output: {
-      filename: 'main.js',
-      path: path.resolve(__dirname, 'dist')
+      filename: '[name].[contenthash].bundle.js',
+      path: path.resolve(__dirname, 'dist'),
+      clean: true
     },
     devServer: {
       static: {
@@ -25,13 +36,12 @@ module.exports = [
     },
     plugins: [
       new HtmlWebpackPlugin({
-        favicon: './public/favicon.ico',
-        manifest: './public/manifest.json',
-        template: './public/index.html'
-      })
+        template: './assets/index.html'
+      }),
+      breakOnErrorHook
     ],
     resolve: {
-      extensions: ['.js', '.ts', '.tsx', '.jsx']
+      extensions: ['.ts', '.tsx']
     },
     module: {
       rules: [
@@ -41,7 +51,7 @@ module.exports = [
           use: ['ts-loader']
         },
         {
-          test: /\.(js|jsx)$/,
+          test: /\.(ts|tsx)$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',

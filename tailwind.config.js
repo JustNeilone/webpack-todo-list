@@ -1,6 +1,6 @@
 /*eslint-env node*/
 module.exports = {
-  content: ['./src/**/*.html', './src/**/*.js', './dist/**/*.html', './dist/**/*.js'],
+  content: ['./src/**/*.html', './src/**/*.tsx', './dist/**/*.html', './dist/**/*.js'],
   theme: {
     extend: {}
   },
