@@ -1,7 +1,7 @@
 import './App.css';
-import React from 'react';
+import React, { ReactElement } from 'react';
 
-function App() {
+function App(): ReactElement {
   return (
     <div className="app">
       <h1 className="app-header text-4xl text-blue-700">Webpack + TypeScript + ESLint + Prettier + TailwindCSS</h1>

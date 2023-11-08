@@ -2,8 +2,10 @@
 const path = require('path');
 // eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
+
 // webpack hook for stopping compilation on error
+// eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const breakOnErrorHook = function () {
   this.hooks.done.tapAsync('done', function (stats, callback) {
     if (stats.compilation.errors.length > 0) {

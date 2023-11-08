@@ -39,6 +39,7 @@
     "react/jsx-props-no-spreading": "off",
     "prefer-promise-reject-errors": "off",
     "camelcase": "off",
+    "@typescript-eslint/explicit-function-return-type": "error",
     "prefer-destructuring": ["error", {
       "VariableDeclarator": {
         "array": false,
