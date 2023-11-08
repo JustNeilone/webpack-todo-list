@@ -38,6 +38,18 @@
     "react/no-set-state": "off",
     "react/jsx-props-no-spreading": "off",
     "prefer-promise-reject-errors": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "prefer-destructuring": ["error", {
+      "VariableDeclarator": {
+        "array": false,
+        "object": true
+      },
+      "AssignmentExpression": {
+        "array": true,
+        "object": false
+      }
+    }, {
+      "enforceForRenamedProperties": false
+    }]
   }
 }
