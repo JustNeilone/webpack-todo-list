@@ -38,20 +38,20 @@ module.exports = [
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: './assets/index.html'
+        template: './public/index.html'
       }),
       breakOnErrorHook
     ],
     resolve: {
-      extensions: ['.ts', '.tsx']
+      extensions: ['.js', '.ts', '.tsx']
     },
     module: {
       rules: [
-        {
-          test: /\.(ts|tsx)$/,
-          exclude: /node_modules/,
-          use: ['ts-loader']
-        },
+        // {
+        //   test: /\.(ts|tsx)$/,
+        //   exclude: /node_modules/,
+        //   use: ['ts-loader']
+        // },
         {
           test: /\.(ts|tsx)$/,
           exclude: /node_modules/,
