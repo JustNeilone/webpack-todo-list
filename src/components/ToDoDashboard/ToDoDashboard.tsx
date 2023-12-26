@@ -1,37 +1,36 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import AddToDo from '../AddToDo/AddToDo';
 import ToDoItem from '../ToDoItem/ToDoItem';
-import { ToDoContext } from '../../contexts/ToDoProvider';
 import { useToDo } from '../../hooks/UseToDo/UseToDo';
+import mockData from '../../mockData';
+import { UUID } from 'crypto';
 
 function ToDoDashboard(): JSX.Element {
-  const { toDoList, setToDoList } = useContext(ToDoContext);
-  const { updateToDoStatus, deleteToDo } = useToDo(toDoList);
+  const toDoList = [...mockData];
+  const { createToDo, updateToDoStatus, deleteToDo, items } = useToDo(toDoList);
 
-  const onChangeClick = (name: string): void => {
-    const updatedList = updateToDoStatus(name);
-    setToDoList(updatedList);
+  const onChangeClick = (id: UUID): void => {
+    updateToDoStatus(id);
   };
 
-  const onDeleteClick = (name: string): void => {
-    const filteredList = deleteToDo(name);
-    setToDoList(filteredList);
+  const onDeleteClick = (id: UUID): void => {
+    deleteToDo(id);
   };
 
   return (
     <div className="bg-white rounded shadow p-6 mx-auto w-full lg:w-3/4 lg:max-w-lg">
       <div className="mb-4">
-        <AddToDo></AddToDo>
+        <AddToDo onAddClick={createToDo}></AddToDo>
       </div>
       <div className="overflow-auto sm:container sm:mx-auto max-h-screen">
-        {toDoList?.length > 0 ? (
-          toDoList.map((toDo, index) => (
+        {items?.length > 0 ? (
+          items.map(({ id, name, isCompleted }) => (
             <ToDoItem
-              key={index}
-              name={toDo.name}
-              isCompleted={toDo.isCompleted}
-              onDoneButtonClick={(): void => onChangeClick(toDo.name)}
-              onDeleteButtonClick={(): void => onDeleteClick(toDo.name)}></ToDoItem>
+              key={id}
+              name={name}
+              isCompleted={isCompleted}
+              onDoneButtonClick={(): void => onChangeClick(id)}
+              onDeleteButtonClick={(): void => onDeleteClick(id)}></ToDoItem>
           ))
         ) : (
           <p>To-do list is empty</p>
