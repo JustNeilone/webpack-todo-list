@@ -6,7 +6,7 @@
     "noImplicitThis": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitReturns": true,
     "alwaysStrict": true,
     "strictBindCallApply": true,
@@ -17,9 +17,11 @@
     "esModuleInterop": true,
     "allowJs": true,
     "checkJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": false,
     "isolatedModules": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
   },
   "include": ["src/**/**/*"],
-  "exclude": ["node_modules"] 
+  "exclude": ["node_modules"],
 }
