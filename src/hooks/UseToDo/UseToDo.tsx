@@ -1,39 +1,39 @@
-import { UUID } from 'crypto';
-import { ToDo } from '../../components/ToDoItem/ToDoItem';
-import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { ToDo, ToDoUpdate } from '../../components/ToDo/ToDoItem/ToDoItem';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { Update } from '@reduxjs/toolkit';
+import { allToDos } from '../../store/store';
+import { addToDoAsync, deleteToDoAsync, updateToDoAsync, getAllToDosAsync } from '../../store/todoSlice';
 
 export interface UseToDoHook {
+  getAllToDos: () => void;
   createToDo: (toDoName: string) => void;
-  updateToDoStatus: (id: UUID) => void;
-  deleteToDo: (id: UUID) => void;
+  updateToDoStatus: (id: string, payload: ToDo) => void;
+  deleteToDo: (id: string) => void;
   items: ToDo[];
 }
 
-export const useToDo = (items: ToDo[]): UseToDoHook => {
-  const [toDoList, setToDoList] = useState<ToDo[]>([...items]);
+export const useToDo = (): UseToDoHook => {
+  const dispatch = useAppDispatch();
+  const items: ToDo[] = useAppSelector(allToDos);
+
+  const getAllToDos = (): void => {
+    dispatch(getAllToDosAsync());
+  };
 
   const createToDo = (name): void => {
-    setToDoList([...toDoList, { id: uuidv4(), name: name, isCompleted: false } as ToDo]);
+    const todo: Omit<ToDo, 'id'> = { name: name, isCompleted: false };
+    dispatch(addToDoAsync(todo));
   };
 
-  const updateToDoStatus = (id: UUID): void => {
-    const items: ToDo[] = [...toDoList];
-    const updatedItems = items.map((t) => {
-      if (t.id === id) t.isCompleted = !t.isCompleted;
-
-      return t;
-    });
-
-    setToDoList(updatedItems);
+  const updateToDoStatus = (id: string, payload: ToDo): void => {
+    const changes: ToDoUpdate = { name: payload.name, isCompleted: !payload.isCompleted };
+    const update: Update<ToDoUpdate, string> = { changes: changes, id: id };
+    dispatch(updateToDoAsync(update));
   };
 
-  const deleteToDo = (id: UUID): void => {
-    // read how TS uses AS and IS and fix typings
-    const items: ToDo[] = [...toDoList]; // fix as ToDo, do type checking
-    const filteredItems = items.filter((t) => t.id !== id);
-    setToDoList(filteredItems);
+  const deleteToDo = (id: string): void => {
+    dispatch(deleteToDoAsync(id));
   };
 
-  return { createToDo, updateToDoStatus, deleteToDo, items: toDoList } as const;
+  return { createToDo, updateToDoStatus, deleteToDo, items, getAllToDos } as const;
 };

@@ -1,9 +1,13 @@
 import React from 'react';
-import ActionButton from '../shared/ActionButton';
-import { UUID } from 'crypto';
+import ActionButton from '../../shared/ActionButton';
 
 export interface ToDo {
-  id: UUID;
+  id: string;
+  name: string;
+  isCompleted: boolean;
+}
+
+export interface ToDoUpdate {
   name: string;
   isCompleted: boolean;
 }

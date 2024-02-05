@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import ToDoDashboard from './components/ToDoDashboard/ToDoDashboard';
+import ToDoDashboard from './components/ToDo/ToDoDashboard/ToDoDashboard';
 
 function App(): ReactElement {
   return (

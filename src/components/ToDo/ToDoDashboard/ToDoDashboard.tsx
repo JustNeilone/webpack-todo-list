@@ -1,19 +1,24 @@
 import React from 'react';
 import AddToDo from '../AddToDo/AddToDo';
 import ToDoItem from '../ToDoItem/ToDoItem';
-import { useToDo } from '../../hooks/UseToDo/UseToDo';
-import mockData from '../../mockData';
-import { UUID } from 'crypto';
+import { useToDo } from '../../../hooks/UseToDo/UseToDo';
+
+let isMockDataFetched: boolean = false;
 
 function ToDoDashboard(): JSX.Element {
-  const toDoList = [...mockData];
-  const { createToDo, updateToDoStatus, deleteToDo, items } = useToDo(toDoList);
+  const { createToDo, updateToDoStatus, deleteToDo, items, getAllToDos } = useToDo();
 
-  const onChangeClick = (id: UUID): void => {
-    updateToDoStatus(id);
+  if (!isMockDataFetched) {
+    getAllToDos();
+    isMockDataFetched = true;
+  }
+
+  const onDoneClick = (id: string): void => {
+    const toDo = items.find((t) => t.id === id)!;
+    updateToDoStatus(id, toDo);
   };
 
-  const onDeleteClick = (id: UUID): void => {
+  const onDeleteClick = (id: string): void => {
     deleteToDo(id);
   };
 
@@ -29,7 +34,7 @@ function ToDoDashboard(): JSX.Element {
               key={id}
               name={name}
               isCompleted={isCompleted}
-              onDoneButtonClick={(): void => onChangeClick(id)}
+              onDoneButtonClick={(): void => onDoneClick(id)}
               onDeleteButtonClick={(): void => onDeleteClick(id)}></ToDoItem>
           ))
         ) : (
