@@ -13,10 +13,9 @@ export interface ToDoUpdate {
 }
 
 export interface ToDoItemProps {
-  name: string;
-  isCompleted: boolean;
+  todo: ToDo;
   onDeleteButtonClick: () => void;
-  onDoneButtonClick: () => void;
+  onDoneButtonClick: (payload: ToDo) => void;
 }
 
 export enum ButtonStyleEnum {
@@ -26,15 +25,15 @@ export enum ButtonStyleEnum {
   DELETE_BTN = 'flex-no-shrink p-2 ml-2 border-2 rounded text-red border-red hover:text-white hover:bg-red'
 }
 
-function ToDoItem({ name, isCompleted, onDoneButtonClick, onDeleteButtonClick }: ToDoItemProps): JSX.Element {
+function ToDoItem({ todo, onDoneButtonClick, onDeleteButtonClick }: ToDoItemProps): JSX.Element {
   return (
     <div className="flex mb-4 items-center">
-      <p className={isCompleted ? ButtonStyleEnum.COMPLETED_TEXT : ButtonStyleEnum.PENDING_TEXT}>{name}</p>
+      <p className={todo.isCompleted ? ButtonStyleEnum.COMPLETED_TEXT : ButtonStyleEnum.PENDING_TEXT}>{todo.name}</p>
       <ActionButton
-        text={isCompleted ? 'Reset' : 'Done'}
+        text={todo.isCompleted ? 'Reset' : 'Done'}
         isDisabled={false}
         style={ButtonStyleEnum.COMPLETE_BTN}
-        onClick={onDoneButtonClick}></ActionButton>
+        onClick={(): void => onDoneButtonClick(todo)}></ActionButton>
       <ActionButton text="Delete" style={ButtonStyleEnum.DELETE_BTN} isDisabled={false} onClick={onDeleteButtonClick}></ActionButton>
     </div>
   );

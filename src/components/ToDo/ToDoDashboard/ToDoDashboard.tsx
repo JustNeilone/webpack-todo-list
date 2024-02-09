@@ -6,15 +6,6 @@ import { useToDo } from '../../../hooks/UseToDo/UseToDo';
 function ToDoDashboard(): JSX.Element {
   const { createToDo, updateToDoStatus, deleteToDo, items } = useToDo();
 
-  const onDoneClick = (id: string): void => {
-    const toDo = items.find((t) => t.id === id)!;
-    updateToDoStatus(id, toDo);
-  };
-
-  const onDeleteClick = (id: string): void => {
-    deleteToDo(id);
-  };
-
   return (
     <div className="bg-white rounded shadow p-6 mx-auto w-full lg:w-3/4 lg:max-w-lg">
       <div className="mb-4">
@@ -22,13 +13,8 @@ function ToDoDashboard(): JSX.Element {
       </div>
       <div className="overflow-auto sm:container sm:mx-auto max-h-screen">
         {items?.length > 0 ? (
-          items.map(({ id, name, isCompleted }) => (
-            <ToDoItem
-              key={id}
-              name={name}
-              isCompleted={isCompleted}
-              onDoneButtonClick={(): void => onDoneClick(id)}
-              onDeleteButtonClick={(): void => onDeleteClick(id)}></ToDoItem>
+          items.map((todo) => (
+            <ToDoItem key={todo.id} todo={todo} onDoneButtonClick={updateToDoStatus} onDeleteButtonClick={(): void => deleteToDo(todo.id)}></ToDoItem>
           ))
         ) : (
           <p>To-do list is empty</p>

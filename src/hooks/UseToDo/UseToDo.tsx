@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 export interface UseToDoHook {
   createToDo: (toDoName: string) => void;
-  updateToDoStatus: (id: string, payload: ToDo) => void;
+  updateToDoStatus: (payload: ToDo) => void;
   deleteToDo: (id: string) => void;
   items: ToDo[];
 }
@@ -16,12 +16,8 @@ export const useToDo = (): UseToDoHook => {
   const dispatch = useAppDispatch();
   const items: ToDo[] = useAppSelector(allToDos);
 
-  // fetching mock data for now, use for syncronization with external source / firebase later
   useEffect(() => {
     dispatch(getAllToDosAsync());
-    return () => {
-      /* cleanup/disconnect code */
-    };
   }, [dispatch]);
 
   const createToDo = (name): void => {
@@ -29,9 +25,9 @@ export const useToDo = (): UseToDoHook => {
     dispatch(addToDoAsync(todo));
   };
 
-  const updateToDoStatus = (id: string, payload: ToDo): void => {
+  const updateToDoStatus = (payload: ToDo): void => {
     const changes: ToDoUpdate = { name: payload.name, isCompleted: !payload.isCompleted };
-    const update: Update<ToDoUpdate, string> = { changes: changes, id: id };
+    const update: Update<ToDoUpdate, string> = { changes: changes, id: payload.id };
     dispatch(updateToDoAsync(update));
   };
 
