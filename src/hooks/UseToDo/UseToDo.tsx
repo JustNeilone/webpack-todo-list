@@ -3,9 +3,9 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { Update } from '@reduxjs/toolkit';
 import { allToDos } from '../../store/store';
 import { addToDoAsync, deleteToDoAsync, updateToDoAsync, getAllToDosAsync } from '../../store/todoSlice';
+import { useEffect } from 'react';
 
 export interface UseToDoHook {
-  getAllToDos: () => void;
   createToDo: (toDoName: string) => void;
   updateToDoStatus: (id: string, payload: ToDo) => void;
   deleteToDo: (id: string) => void;
@@ -16,9 +16,13 @@ export const useToDo = (): UseToDoHook => {
   const dispatch = useAppDispatch();
   const items: ToDo[] = useAppSelector(allToDos);
 
-  const getAllToDos = (): void => {
+  // fetching mock data for now, use for syncronization with external source / firebase later
+  useEffect(() => {
     dispatch(getAllToDosAsync());
-  };
+    return () => {
+      /* cleanup/disconnect code */
+    };
+  }, [dispatch]);
 
   const createToDo = (name): void => {
     const todo: Omit<ToDo, 'id'> = { name: name, isCompleted: false };
@@ -35,5 +39,5 @@ export const useToDo = (): UseToDoHook => {
     dispatch(deleteToDoAsync(id));
   };
 
-  return { createToDo, updateToDoStatus, deleteToDo, items, getAllToDos } as const;
+  return { createToDo, updateToDoStatus, deleteToDo, items } as const;
 };
