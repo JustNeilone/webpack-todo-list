@@ -3,15 +3,8 @@ import AddToDo from '../AddToDo/AddToDo';
 import ToDoItem from '../ToDoItem/ToDoItem';
 import { useToDo } from '../../../hooks/UseToDo/UseToDo';
 
-// let isMockDataFetched: boolean = false;
-
 function ToDoDashboard(): JSX.Element {
   const { createToDo, updateToDoStatus, deleteToDo, items } = useToDo();
-
-  // if (!isMockDataFetched) {
-  //   getAllToDos();
-  //   isMockDataFetched = true;
-  // }
 
   const onDoneClick = (id: string): void => {
     const toDo = items.find((t) => t.id === id)!;
