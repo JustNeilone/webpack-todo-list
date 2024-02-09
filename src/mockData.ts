@@ -1,4 +1,4 @@
-import { ToDo } from './components/ToDoItem/ToDoItem';
+import { ToDo } from './components/ToDo/ToDoItem/ToDoItem';
 
 const mockData: ToDo[] = [
   { id: '23af99eb-b627-41d1-9c39-d1c3ec7c65df', name: 'Test 1', isCompleted: false },
